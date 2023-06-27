@@ -170,6 +170,33 @@ You can run SMPL-based human pose detectors (e.g., [SPIN](https://github.com/nko
 }
 ```
 
+VIBE can be used to create this metadata. 
+
+```sh
+cd VIBE
+python demo_video.py --vid_file <your-video-path> --output_folder output/ --tracking_method bbox --detector maskrcnn --wireframe
+# convert the VIBE result to metadata.json
+cd ..
+python scripts/vibe_metadata.py ./VIBE/output/<your-video-name>/vibe_output.pkl -o dataset/wild/monocular/metadata.json
+```
+
+A matting tool like *RobustVideoMatting* can be used to create the mask. A better matting tool should lead to better results.
+
+```sh
+cd RobustVideoMatting
+# run python
+python
+```
+
+```python
+from inference import convert_video
+from model import MattingNetwork
+import torch
+model = MattingNetwork('mobilenetv3').eval().cuda()  # or "resnet50"
+model.load_state_dict(torch.load('rvm_mobilenetv3.pth'))
+convert_video(model, input_source="../dataset/wild/monocular/images", output_type="png_sequence", output_alpha="../dataset/wild/monocular/masks")
+```
+
 Once the dataset is properly created, run the script to complete dataset preparation.
 
     cd tools/prepare_wild

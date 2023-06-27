@@ -1,0 +1,6 @@
+[submodule "RobustVideoMatting"]
+	path = RobustVideoMatting
+	url = https://github.com/thegenerativegeneration/RobustVideoMatting.git
+[submodule "VIBE"]
+	path = VIBE
+	url = https://github.com/thegenerativegeneration/VIBE.git
