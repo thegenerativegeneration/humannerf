@@ -170,23 +170,31 @@ You can run SMPL-based human pose detectors (e.g., [SPIN](https://github.com/nko
 }
 ```
 
-VIBE can be used to create this metadata. 
+ffmpeg can be used to create the sequence of images from your video.
+
+```sh
+ffmpeg -i <your-video> dataset/wild/monocular/%08d.png
+```
+
+VIBE can be used to create the metadata. 
 
 ```sh
 cd VIBE
-python demo_video.py --vid_file <your-video-path> --output_folder output/ --tracking_method bbox --detector maskrcnn --wireframe
+python demo.py --vid_file <your-video-path> --output_folder output/ --tracking_method bbox --detector maskrcnn --wireframe
 # convert the VIBE result to metadata.json
 cd ..
 python scripts/vibe_metadata.py ./VIBE/output/<your-video-name>/vibe_output.pkl -o dataset/wild/monocular/metadata.json
 ```
 
-A matting tool like *RobustVideoMatting* can be used to create the mask. A better matting tool should lead to better results.
+A matting tool like *RobustVideoMatting* can be used to create the mask. Acorrding to the paper, a better matting tool should lead to better results.
 
 ```sh
 cd RobustVideoMatting
 # run python
 python
 ```
+
+Then in the Python console do:
 
 ```python
 from inference import convert_video
